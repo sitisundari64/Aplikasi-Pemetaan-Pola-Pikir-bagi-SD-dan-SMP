@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="id">
+ <head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260630-05-8900874"}');</script><script src="/_sdk/e4192b04afde3ce7.telemetry_sdk.js" integrity="sha512-4eZpyKBd3YJnsIPrIpaBqo7QT5UZ6+KSFXkSu1IQiB7jKM8y67ChRhZ5Yh6JfuOJCbPdISiNcS6nLKZzIMG1uQ=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pemetaan Profil Pola Pikir</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        .radio-btn input:checked + span { background: #2563eb; color: white; border-color: #2563eb; }
+        .radio-btn-red input:checked + span { background: #dc2626; color: white; border-color: #dc2626; }
+    </style>
+  <script src="/_sdk/5d8c692e132d2125.resizing_sdk.js" type="text/javascript" integrity="sha512-/Du3Fqe12kKsCd3BrbaNQEPtMxQi9S5hbJhnTf09AAilpqYsGa4N0rnimSX1Ui4dwNElKlen6VlI+E1n/NEfrA=="></script>
+ </head>
+ <body data-template-id="__page-root" class="min-h-screen w-full">
+  <header class="w-full py-6 px-4">
+   <div class="max-w-3xl mx-auto text-center">
+    <h1 data-template-id="page-title" class="canva-text text-2xl font-bold"></h1>
+    <p data-template-id="page-subtitle" class="canva-text mt-2"></p>
+   </div>
+  </header>
+  <main class="max-w-3xl mx-auto px-4 pb-12">
+   <form id="survey-form" class="space-y-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+     <div>
+      <label data-template-id="label-nama" class="canva-text block mb-1 font-medium" for="nama"></label> <input id="nama" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+     </div>
+     <div>
+      <label data-template-id="label-kelas" class="canva-text block mb-1 font-medium" for="kelas"></label> <input id="kelas" type="text" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none">
+     </div>
+    </div>
+    <div id="questions-container" class="space-y-3 mt-6"></div>
+    <div class="flex justify-center mt-6">
+     <button data-template-id="submit-btn" type="submit" class="canva-button px-8 py-3 rounded-lg font-semibold text-lg transition hover:opacity-90"></button>
+    </div>
+   </form>
+   <div id="result-box" class="hidden mt-8 p-6 rounded-xl text-center shadow-lg">
+    <h2 data-template-id="result-title" class="canva-text text-xl font-bold mb-2"></h2>
+    <p id="result-text" class="text-2xl font-bold"></p>
+    <p id="result-detail" class="mt-2 text-gray-600"></p>
+   </div>
+   <section class="mt-12">
+    <h2 data-template-id="history-title" class="canva-text text-xl font-bold mb-4"></h2>
+    <div class="overflow-x-auto rounded-lg border border-gray-200">
+     <table class="w-full text-sm">
+      <thead data-template-id="table-header" class="canva-section">
+       <tr>
+        <th class="px-3 py-2 text-left">Nama</th>
+        <th class="px-3 py-2 text-left">Kelas</th>
+        <th class="px-3 py-2 text-center">A</th>
+        <th class="px-3 py-2 text-center">B</th>
+        <th class="px-3 py-2 text-left">Profil</th>
+        <th class="px-3 py-2 text-left">Tanggal</th>
+        <th class="px-3 py-2"></th>
+       </tr>
+      </thead>
+      <tbody id="history-body"></tbody>
+     </table>
+    </div>
+    <p id="empty-history" data-template-id="empty-state" class="canva-text text-center py-6 text-gray-400"></p>
+    <p id="limit-warning" class="hidden text-center py-2 text-red-600 font-medium">Batas 999 data tercapai.</p>
+   </section>
+  </main>
+  <footer data-template-id="footer" class="canva-text w-full py-4 px-4 text-center mt-12 border-t border-gray-200"></footer>
+  <script src="/_sdk/48bf7c4c70d0d03c.data_sdk.js" integrity="sha512-e/yrQJz+prdXXt4yUvxXhl1WBGu3BRkP8X0fipGXI5gqiFClI7wI6K3TQnD7d63vx+BVhwzIvY6r8OrpX7lXJA=="></script>
+  <script src="/_sdk/c94a279e896d0a23.editing_sdk.js" integrity="sha512-uhzUP50YzTVKO+Zk7rEhhvjMMNFy592eHXVEXciJzhLpIQxrlwzWv/DQvyYWQ+AKpYwxxCvjgWkVa5LTga2NWg=="></script>
+  <script>
+        const pernyataan = [
+            "Saya memiliki kelemahan dalam melakukan beberapa hal.",
+            "Tidak masalah bila saya gagal sebab itu kesempatan untuk belajar.",
+            "Jika orang lain melakukan sesuatu yang lebih baik daripada saya, itu akan menyebabkan saya merasa rendah diri.",
+            "Saya suka mencoba hal-hal yang baru meskipun hal ini memiliki resiko.",
+            "Saya merasa sukses pada saat mampu menunjukkan kepada orang lain bahwa saya mahir dalam suatu bidang.",
+            "Ketika orang lain sukses, saya merasa terinspirasi dan ingin melakukan hal yang sama.",
+            "Saya senang saat mampu melakukan sesuatu yang tidak bisa dilakukan orang lain.",
+            "Tingkat kecerdasan bisa diubah lewat belajar dan berlatih.",
+            "Menurut pendapat saya, manusia dilahirkan dengan tingkat kecerdasan tertentu yang tidak bisa diubah lagi.",
+            "Kesulitan membuat saya ingin berusaha lebih keras lagi."
+        ];
+
+        const container = document.getElementById('questions-container');
+        pernyataan.forEach((p, i) => {
+            const no = i + 1;
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-3 p-3 rounded-lg bg-white border border-gray-100 shadow-sm';
+            div.innerHTML = `
+                <span class="font-bold text-gray-500 mt-0.5 min-w-[24px]">${no}.</span>
+                <div class="flex-1">
+                    <p class="text-gray-800 mb-2">${p}</p>
+                    <div class="flex gap-3">
+                        <label class="radio-btn cursor-pointer"><input type="radio" name="q${no}" value="S" required class="hidden"><span class="inline-block px-4 py-1 rounded-full border-2 border-green-300 text-sm font-medium transition">Setuju</span></label>
+                        <label class="radio-btn-red cursor-pointer"><input type="radio" name="q${no}" value="T" required class="hidden"><span class="inline-block px-4 py-1 rounded-full border-2 border-red-300 text-sm font-medium transition">Tidak Setuju</span></label>
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+
+        let allData = [];
+
+        const dataHandler = {
+            onDataChanged(data) {
+                allData = data;
+                renderHistory(data);
+            }
+        };
+
+        function renderHistory(data) {
+            const tbody = document.getElementById('history-body');
+            const empty = document.getElementById('empty-history');
+            if (data.length === 0) { tbody.innerHTML = ''; empty.classList.remove('hidden'); return; }
+            empty.classList.add('hidden');
+
+            const existing = new Map([...tbody.children].map(r => [r.dataset.id, r]));
+            const sorted = [...data].sort((a, b) => (b.tanggal || '').localeCompare(a.tanggal || ''));
+
+            sorted.forEach(row => {
+                const id = row.__backendId;
+                if (existing.has(id)) {
+                    const tr = existing.get(id);
+                    tr.cells[0].textContent = row.nama;
+                    tr.cells[1].textContent = row.kelas;
+                    tr.cells[2].textContent = row.skor_ganjil;
+                    tr.cells[3].textContent = row.skor_genap;
+                    tr.cells[4].textContent = row.profil;
+                    tr.cells[5].textContent = new Date(row.tanggal).toLocaleDateString('id-ID');
+                    existing.delete(id);
+                } else {
+                    const tr = document.createElement('tr');
+                    tr.dataset.id = id;
+                    tr.className = 'border-t border-gray-100';
+                    tr.innerHTML = `<td class="px-3 py-2">${row.nama}</td><td class="px-3 py-2">${row.kelas}</td><td class="px-3 py-2 text-center">${row.skor_ganjil}</td><td class="px-3 py-2 text-center">${row.skor_genap}</td><td class="px-3 py-2 font-semibold">${row.profil}</td><td class="px-3 py-2">${new Date(row.tanggal).toLocaleDateString('id-ID')}</td><td class="px-3 py-2"><button class="text-red-500 hover:text-red-700 text-xs" onclick="deleteRow('${id}')">Hapus</button></td>`;
+                    tbody.appendChild(tr);
+                }
+            });
+            existing.forEach(tr => tr.remove());
+        }
+
+        async function deleteRow(id) {
+            const row = allData.find(r => r.__backendId === id);
+            if (!row) return;
+            const result = await window.dataSdk.delete(row);
+            if (!result.isOk) { console.error(result.error); }
+        }
+
+        document.getElementById('survey-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (allData.length >= 999) { document.getElementById('limit-warning').classList.remove('hidden'); return; }
+
+            const nama = document.getElementById('nama').value.trim();
+            const kelas = document.getElementById('kelas').value.trim();
+            const answers = [];
+            let A = 0, B = 0;
+
+            for (let i = 1; i <= 10; i++) {
+                const val = document.querySelector(`input[name="q${i}"]:checked`).value;
+                answers.push(val);
+                if (i % 2 === 1 && val === 'S') A++;
+                if (i % 2 === 0 && val === 'S') B++;
+            }
+
+            let profil = 'Campuran';
+            if (A > B) profil = 'Pola Pikir Tetap (PPT)';
+            else if (A < B) profil = 'Pola Pikir Bertumbuh (PPB)';
+
+            const btn = document.querySelector('[data-template-id="submit-btn"]');
+            btn.disabled = true; btn.style.opacity = '0.5';
+
+            const result = await window.dataSdk.create({
+                nama, kelas, jawaban: answers.join(','),
+                skor_ganjil: A, skor_genap: B, profil, tanggal: new Date().toISOString()
+            });
+
+            btn.disabled = false; btn.style.opacity = '1';
+
+            if (result.isOk) {
+                const box = document.getElementById('result-box');
+                box.classList.remove('hidden');
+                document.getElementById('result-text').textContent = profil;
+                document.getElementById('result-detail').textContent = `Skor Ganjil (A): ${A} | Skor Genap (B): ${B}`;
+                box.style.background = A > B ? '#fef2f2' : A < B ? '#f0fdf4' : '#fefce8';
+                e.target.reset();
+            }
+        });
+
+        (async () => {
+            await window.dataSdk.init(dataHandler);
+            lucide.createIcons();
+        })();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1408ccde0deea76',t:'MTc4Mjg1Nzk0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
